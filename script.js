@@ -1,5 +1,21 @@
 (function () {
   const form = document.getElementById("application-form");
+  const formPanel = document.getElementById("form-panel");
+  const pathwayScreen = document.getElementById("pathway-screen");
+  const pathwayButtons = document.querySelectorAll(".pathway-button");
+  const selectedPathwayText = document.getElementById("selected-pathway");
+  const selectedPathwayInput = document.getElementById("selected-pathway-input");
+  const trainingSection = document.querySelector("[data-training-section]");
+  const studentOnlySection = document.querySelector("[data-student-only]");
+  const workSection = document.querySelector("[data-work-section]");
+  const presentWorkSection = document.querySelector("[data-present-work]");
+  const previousWorkSection = document.querySelector("[data-previous-work]");
+  const skillsSection = document.querySelector("[data-skills-section]");
+  const volunteerSection = document.querySelector("[data-volunteer-section]");
+  const languageTestSelect = document.getElementById("language-test");
+  const languageTestDetailsSection = document.querySelector("[data-language-test-details]");
+  const otherTestField = document.querySelector("[data-other-test-field]");
+  const backToPathwaysButton = document.getElementById("back-to-pathways");
   const downloadButton = document.getElementById("download-copy");
   const dateInput = form.querySelector('input[name="Date"]');
   const signatureCanvas = document.getElementById("signature-pad");
@@ -13,6 +29,57 @@
 
   if (dateInput && !dateInput.value) {
     dateInput.value = new Date().toISOString().slice(0, 10);
+  }
+
+  function setFieldGroupDisabled(container, disabled) {
+    if (!container) {
+      return;
+    }
+
+    container.querySelectorAll("input, textarea, select").forEach(function (field) {
+      field.disabled = disabled;
+    });
+  }
+
+  function setSectionVisibility(container, shouldShow) {
+    container.classList.toggle("is-hidden", !shouldShow);
+    setFieldGroupDisabled(container, !shouldShow);
+  }
+
+  function selectPathway(pathway) {
+    const isStudent = pathway === "International Student";
+    const isTourist = pathway === "Tourist";
+    const hideTraining = isStudent || isTourist;
+
+    selectedPathwayInput.value = pathway;
+    selectedPathwayText.textContent = `Pathway: ${pathway}`;
+    pathwayScreen.classList.add("is-hidden");
+    formPanel.classList.remove("is-hidden");
+    setSectionVisibility(studentOnlySection, isStudent);
+    setSectionVisibility(trainingSection, !hideTraining);
+    setSectionVisibility(workSection, !isStudent);
+    setSectionVisibility(presentWorkSection, !isStudent);
+    setSectionVisibility(previousWorkSection, !isStudent && !isTourist);
+    setSectionVisibility(skillsSection, !isTourist);
+    setSectionVisibility(volunteerSection, !isTourist);
+    setCanvasScale();
+    formPanel.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  function showPathwayMenu() {
+    formPanel.classList.add("is-hidden");
+    pathwayScreen.classList.remove("is-hidden");
+    pathwayScreen.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  function updateLanguageTestFields() {
+    const hasSelectedTest = Boolean(languageTestSelect.value);
+    const isOther = languageTestSelect.value === "Others";
+
+    languageTestDetailsSection.classList.toggle("is-hidden", !hasSelectedTest);
+    otherTestField.classList.toggle("is-hidden", !isOther);
+    setFieldGroupDisabled(languageTestDetailsSection, !hasSelectedTest);
+    setFieldGroupDisabled(otherTestField, !isOther);
   }
 
   function setCanvasScale() {
@@ -143,6 +210,13 @@
   function downloadPdfCopy() {
     updateSignatureValue();
 
+    if (!selectedPathwayInput.value) {
+      alert("Please select an application pathway first.");
+      pathwayScreen.classList.remove("is-hidden");
+      formPanel.classList.add("is-hidden");
+      return;
+    }
+
     if (!form.checkValidity()) {
       form.reportValidity();
       return;
@@ -157,6 +231,13 @@
     window.print();
   }
 
+  pathwayButtons.forEach(function (button) {
+    button.addEventListener("click", function () {
+      selectPathway(button.dataset.pathway);
+    });
+  });
+  backToPathwaysButton.addEventListener("click", showPathwayMenu);
+  setFieldGroupDisabled(studentOnlySection, true);
   setCanvasScale();
   window.addEventListener("resize", setCanvasScale);
   signatureCanvas.addEventListener("mousedown", startSigning);
@@ -167,5 +248,7 @@
   window.addEventListener("touchend", stopSigning);
   clearSignatureButton.addEventListener("click", clearSignature);
   uploadSignatureInput.addEventListener("change", uploadSignature);
+  languageTestSelect.addEventListener("change", updateLanguageTestFields);
   downloadButton.addEventListener("click", downloadPdfCopy);
+  updateLanguageTestFields();
 })();

@@ -8,32 +8,43 @@
   </head>
   <body>
     <main class="page-shell">
-      <section class="form-panel" aria-labelledby="form-title">
+      <section class="pathway-screen" id="pathway-screen" aria-labelledby="pathway-title">
+        <div class="pathway-brand">
+          <img src="ecc-logo.jpeg" alt="ECC Consulting Global Agency logo" class="pathway-logo">
+          <p class="eyebrow">ECC Consulting Global</p>
+          <h1 id="pathway-title">Select Your Pathway</h1>
+          <p class="pathway-intro">Choose the application pathway that matches your purpose.</p>
+        </div>
+        <div class="pathway-grid">
+          <button type="button" class="pathway-button" data-pathway="International Student">International Student</button>
+          <button type="button" class="pathway-button" data-pathway="Permanent Residency">Permanent Residency</button>
+          <button type="button" class="pathway-button" data-pathway="Career Pathways">Career Pathways</button>
+          <button type="button" class="pathway-button" data-pathway="Direct Work Recruitment">Direct Work Recruitment</button>
+          <button type="button" class="pathway-button" data-pathway="Tourist">Tourist</button>
+        </div>
+      </section>
+
+      <section class="form-panel is-hidden" id="form-panel" aria-labelledby="form-title">
         <header class="brand-header">
           <img src="ecc-logo.jpeg" alt="ECC Consulting Global Agency logo" class="brand-logo">
           <div>
             <p class="eyebrow">ECC Consulting Global</p>
             <h1 id="form-title">Applicant Profile</h1>
+            <p class="selected-pathway" id="selected-pathway">Pathway: Not selected</p>
             <p class="contact-line">
               Business District: Ajman Free Zone, Office C1-1F-SF10019
               <span>Tel: +971541620177</span>
               <span>www.eccagency.com</span>
             </p>
+            <button type="button" class="back-button" id="back-to-pathways">Change Pathway</button>
           </div>
         </header>
 
         <form id="application-form">
+          <input type="hidden" name="Selected Pathway" id="selected-pathway-input">
 
           <section class="section-card">
-            <h2>1. Objective or Summary</h2>
-            <label>
-              Career Objective Summary
-              <textarea name="Career Objective Summary" rows="4" required></textarea>
-            </label>
-          </section>
-
-          <section class="section-card">
-            <h2>2. Personal Information</h2>
+            <h2>1. Personal Information</h2>
             <div class="field-grid">
               <label>
                 Full Name
@@ -55,7 +66,7 @@
           </section>
 
           <section class="section-card">
-            <h2>3. Address of Origin</h2>
+            <h2>2. Address of Origin</h2>
             <div class="field-grid">
               <label>
                 City
@@ -77,7 +88,7 @@
           </section>
 
           <section class="section-card">
-            <h2>4. Education</h2>
+            <h2>3. Education</h2>
             <h3>Latest Education</h3>
             <div class="field-grid">
               <label>
@@ -106,6 +117,25 @@
               <textarea name="Latest Education - Relevant Coursework" rows="3"></textarea>
             </label>
 
+            <div class="student-only" data-student-only>
+              <h3>Study Pathway Information</h3>
+              <div class="field-grid">
+                <label>
+                  Planned Country of Study
+                  <input name="Study Pathway - Planned Country of Study" type="text">
+                </label>
+                <label>
+                  Planned Course to Study
+                  <input name="Study Pathway - Planned Course to Study" type="text">
+                </label>
+                <label>
+                  Planned Year to Study
+                  <input name="Study Pathway - Planned Year to Study" type="text">
+                </label>
+              </div>
+            </div>
+
+            <div class="training-section" data-training-section>
             <h3>Achievements, Trainings, Vocational, Awards, Masteral</h3>
             <div class="field-grid">
               <label>
@@ -137,10 +167,12 @@
                 <input name="Training - Expiration Date" type="date">
               </label>
             </div>
+            </div>
           </section>
 
-          <section class="section-card">
-            <h2>5. Work Experience</h2>
+          <section class="section-card work-section" data-work-section>
+            <h2>4. Work Experience</h2>
+            <div data-present-work>
             <h3>Present / Latest Two Years</h3>
             <div class="field-grid">
               <label>
@@ -168,7 +200,9 @@
               Responsibilities / Achievements
               <textarea name="Present Work - Responsibilities or Achievements" rows="4"></textarea>
             </label>
+            </div>
 
+            <div data-previous-work>
             <h3>Previous Work Experience</h3>
             <div class="field-grid">
               <label>
@@ -196,10 +230,11 @@
               Responsibilities / Achievements
               <textarea name="Previous Work - Responsibilities or Achievements" rows="4"></textarea>
             </label>
+            </div>
           </section>
 
-          <section class="section-card">
-            <h2>6. Skills</h2>
+          <section class="section-card skills-section" data-skills-section>
+            <h2>5. Skills</h2>
             <label>
               Technical Skills
               <textarea name="Technical Skills" rows="3"></textarea>
@@ -212,10 +247,33 @@
               Languages
               <input name="Languages" type="text">
             </label>
+            <div class="language-test-section" data-language-test-section>
+              <h3>Language Test</h3>
+              <label>
+                Choose if any of the following language test has been taken
+                <select name="Language Test Taken" id="language-test">
+                  <option value="">Select language test</option>
+                  <option value="TOEFL">TOEFL</option>
+                  <option value="IELTS">IELTS</option>
+                  <option value="ELLT">ELLT</option>
+                  <option value="Others">Others</option>
+                </select>
+              </label>
+              <div class="field-grid language-test-details is-hidden" data-language-test-details>
+                <label class="other-test-field is-hidden" data-other-test-field>
+                  Other Test Name
+                  <input name="Other Language Test Name" type="text">
+                </label>
+                <label>
+                  Band Score
+                  <input name="Language Test Band Score" type="text">
+                </label>
+              </div>
+            </div>
           </section>
 
-          <section class="section-card">
-            <h2>7. Volunteer Experience</h2>
+          <section class="section-card volunteer-section" data-volunteer-section>
+            <h2>6. Volunteer Experience</h2>
             <div class="field-grid">
               <label>
                 Role
@@ -245,7 +303,7 @@
           </section>
 
           <section class="section-card">
-            <h2>8. References</h2>
+            <h2>7. References</h2>
             <div class="field-grid">
               <label>
                 Full Name
@@ -271,7 +329,7 @@
           </section>
 
           <section class="section-card declaration-card">
-            <h2>9. Declaration</h2>
+            <h2>8. Declaration</h2>
             <p>
               I certify that the information provided in this application is true and complete to the best of my knowledge.
               I understand that any false statements or omissions may result in disqualification from employment or
@@ -295,6 +353,10 @@
               <label>
                 Date
                 <input name="Date" type="date" required>
+              </label>
+              <label>
+                AGP Reference
+                <input name="AGP Reference" type="text">
               </label>
             </div>
             <label class="check-row">

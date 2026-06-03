@@ -1,12 +1,13 @@
 # ECC Online Application Form
 
 This folder contains a simple online application form based on `ECC_Application Form.pdf`.
+Clients first choose an application pathway, then complete the matching form.
 
 ## Files
 
 - `index.html` - the client-facing form.
 - `styles.css` - ECC-branded form styling.
-- `script.js` - date prefill, signature pad, and PDF copy download.
+- `script.js` - pathway selection, date prefill, signature pad, and PDF copy download.
 - Signature pad - clients can draw, upload, and clear their signature.
 - `ecc-logo.jpeg` - logo used in the form.
 
@@ -14,7 +15,7 @@ This folder contains a simple online application form based on `ECC_Application 
 
 The form no longer sends applications by email automatically.
 
-Clients fill the form, sign in the signature box, then click `Download PDF Copy`. The browser print dialog opens, where they can choose `Save as PDF`. The downloaded PDF uses the same visible form layout and includes the signature.
+Clients choose a pathway, fill the form, sign in the signature box, then click `Download PDF Copy`. The browser print dialog opens, where they can choose `Save as PDF`. The downloaded PDF uses the same visible form layout and includes the signature.
 
 ## How to make a client link
 

@@ -34,6 +34,72 @@ body {
   box-shadow: 0 22px 70px rgba(10, 22, 38, 0.22);
 }
 
+.is-hidden {
+  display: none;
+}
+
+.pathway-screen {
+  background: var(--panel);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  box-shadow: 0 22px 70px rgba(10, 22, 38, 0.22);
+  padding: 34px 30px;
+}
+
+.pathway-brand {
+  max-width: 720px;
+  margin-bottom: 26px;
+}
+
+.pathway-logo {
+  width: 112px;
+  height: 112px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 3px solid var(--gold);
+  background: var(--navy);
+  margin-bottom: 18px;
+}
+
+.pathway-intro {
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+.pathway-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.pathway-button {
+  min-height: 64px;
+  text-align: left;
+  background: #ffffff;
+  color: var(--navy);
+  border-color: #b9c4d6;
+}
+
+.pathway-button:hover,
+.pathway-button:focus {
+  border-color: var(--gold);
+  outline: 3px solid rgba(201, 154, 53, 0.18);
+}
+
+.selected-pathway {
+  margin: 0 0 10px;
+  color: var(--gold-dark);
+  font-weight: 700;
+}
+
+.back-button {
+  min-height: 38px;
+  margin-top: 14px;
+  padding: 0 14px;
+  background: #ffffff;
+  color: var(--navy);
+  border-color: #b9c4d6;
+}
+
 .brand-header {
   display: grid;
   grid-template-columns: 132px 1fr;
@@ -113,6 +179,18 @@ form {
 
 .section-card h3:first-of-type {
   margin-top: 0;
+}
+
+.student-only.is-hidden,
+.training-section.is-hidden,
+.work-section.is-hidden,
+.skills-section.is-hidden,
+.volunteer-section.is-hidden,
+.language-test-details.is-hidden,
+.other-test-field.is-hidden,
+[data-present-work].is-hidden,
+[data-previous-work].is-hidden {
+  display: none;
 }
 
 .field-grid {
@@ -338,6 +416,8 @@ button:hover {
   }
 
   .action-bar,
+  .back-button,
+  .pathway-screen,
   .signature-actions,
   .signature-help,
   .form-status {
@@ -379,6 +459,15 @@ button:hover {
   }
 
   .field-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .pathway-screen {
+    min-height: 100vh;
+    padding: 24px 20px;
+  }
+
+  .pathway-grid {
     grid-template-columns: 1fr;
   }
 
